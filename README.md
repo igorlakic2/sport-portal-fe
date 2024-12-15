@@ -10,6 +10,8 @@
 
 -Redux + RTK query
 
+-React Hook Form + Zod
+
 -Node + MongoDB
 
 # Description:
