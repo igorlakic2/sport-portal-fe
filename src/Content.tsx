@@ -1,16 +1,29 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import Administration from "./pages/administration/Administration";
+import CategoriesListPage from "./pages/administration/CategoriesListPage";
+import NewsListPage from "./pages/administration/NewsListPage";
+import UsersListPage from "./pages/administration/UsersListPage";
 import NewsPage from "./pages/public/news/NewsPage";
-import AdministrationPage from "./pages/administration/AdministrationPage";
+import PrivateRoute from "./PrivateRoute";
 
 const Content = () => {
   return (
     <div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<NewsPage />} />
-          <Route path="/administration" element={<AdministrationPage />} />
-        </Routes>
-      </Router>
+      <Routes>
+        <Route path="/" element={<NewsPage />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/administration/news" element={<NewsListPage />} />
+        </Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/administration/users" element={<UsersListPage />} />
+        </Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/administration/categories" element={<CategoriesListPage />} />
+        </Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/administration" element={<Administration />} />
+        </Route>
+      </Routes>
     </div>
   );
 };
