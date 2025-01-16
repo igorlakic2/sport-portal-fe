@@ -6,7 +6,9 @@ const Home = () => {
     <div>
       <main>
         <AppTopbar />
-        <Content />
+        <>
+          <Content />
+        </>
       </main>
     </div>
   );
