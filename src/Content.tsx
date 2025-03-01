@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Administration from "./pages/administration/Administration";
-import CategoriesListPage from "./pages/administration/CategoriesListPage";
+import CategoriesListPage from "./pages/administration/categories/CategoriesListPage";
 import NewsListPage from "./pages/administration/NewsListPage";
 import UsersListPage from "./pages/administration/UsersListPage";
 import NewsPage from "./pages/public/news/NewsPage";

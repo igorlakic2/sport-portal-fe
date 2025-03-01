@@ -6,9 +6,13 @@
 
 -MUI
 
+-Tailwind
+
 -Unit testing
 
--Redux + RTK query
+-TanStack Query
+
+-Redux
 
 -React Hook Form + Zod
 

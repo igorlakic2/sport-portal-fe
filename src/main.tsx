@@ -1,4 +1,5 @@
 import { ThemeProvider } from "@emotion/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
@@ -9,16 +10,20 @@ import { theme } from "./customTheme";
 import "./index.css";
 import store from "./store.ts";
 
+const queryClient = new QueryClient();
+
 createRoot(document.getElementById("root")!).render(
-  <ThemeProvider theme={theme}>
-    <StrictMode>
-      <AuthProvider>
-        <Provider store={store}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </Provider>
-      </AuthProvider>
-    </StrictMode>
-  </ThemeProvider>
+  <StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <AuthProvider>
+          <ThemeProvider theme={theme}>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </ThemeProvider>
+        </AuthProvider>
+      </Provider>
+    </QueryClientProvider>
+  </StrictMode>
 );
