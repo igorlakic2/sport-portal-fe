@@ -30,13 +30,17 @@ const TableDeleteIcon = ({ headerMessage, contentMessage, onSubmit }: PropsType)
           <DialogContentText id="alert-dialog-description">{contentMessage}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose} variant="outlined">
+            Cancel
+          </Button>
           <Button
             onClick={() => {
               onSubmit();
               handleClose();
             }}
             autoFocus
+            variant="contained"
+            color="error"
           >
             Delete
           </Button>

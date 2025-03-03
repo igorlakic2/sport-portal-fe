@@ -14,13 +14,17 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import { useState } from "react";
 import TableDeleteIcon from "../../../components/TableDeleteIcon";
 import { Category } from "../../../services/CategoryServices";
+import { DialogForm } from "../../../types/CommonTypes";
+import CategoryDialog from "./CategoryDialog";
 import useCategoryList from "./hooks/useCategoryList";
 import useDeleteCategory from "./hooks/useDeleteCategory";
 
 const CategoriesListPage = () => {
   const { data, totalItems, isLoading, page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = useCategoryList();
+  const [dialogFormState, setDialogFormState] = useState<DialogForm<Category>>({ visible: false });
   const categoryDeleteMutation = useDeleteCategory();
 
   return (
@@ -29,7 +33,7 @@ const CategoriesListPage = () => {
         Categories
       </Typography>
       <div className="flex justify-start my-4">
-        <Button variant="contained" startIcon={<AddIcon />}>
+        <Button variant="contained" startIcon={<AddIcon />} onClick={() => setDialogFormState({ visible: true, operation: "create" })}>
           Add
         </Button>
       </div>
@@ -51,7 +55,7 @@ const CategoriesListPage = () => {
                     {category.name}
                   </TableCell>
                   <TableCell sx={{ display: "flex", justifyContent: "end", padding: "0 0 0 16px" }}>
-                    <IconButton aria-label="edit">
+                    <IconButton aria-label="edit" onClick={() => setDialogFormState({ visible: true, entity: category, operation: "update" })}>
                       <EditIcon />
                     </IconButton>
                     <TableDeleteIcon
@@ -73,12 +77,14 @@ const CategoriesListPage = () => {
                   page={page}
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
-                  // ActionsComponent={TablePaginationActions}
                 />
               </TableRow>
             </TableFooter>
           </Table>
         </TableContainer>
+      )}
+      {dialogFormState.visible && (
+        <CategoryDialog dialogFormState={dialogFormState} handleClose={() => setDialogFormState({ visible: false, entity: undefined })} />
       )}
     </Paper>
   );
