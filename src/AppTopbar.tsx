@@ -4,6 +4,8 @@ import { AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Too
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth/useAuth";
+import LoginDialog from "./components/LoginDialog";
+import SignUpDialog from "./components/SignUpDialog";
 
 const adminPages = [
   { label: "Users", path: "/administration/users" },
@@ -16,6 +18,8 @@ const AppTopbar = () => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const [signUpVisible, setSignUpVisible] = useState<boolean>(false);
+  const [loginVisible, setLoginVisible] = useState<boolean>(false);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -57,7 +61,14 @@ const AppTopbar = () => {
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-              <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
                 <MenuIcon />
               </IconButton>
               {isAuthenticated && (
@@ -148,13 +159,20 @@ const AppTopbar = () => {
                 </Menu>
               </Box>
             ) : (
-              <Box sx={{ flexGrow: 0 }} onClick={login}>
-                Login
-              </Box>
+              <div className="flex gap-3">
+                <Typography className="cursor-pointer" onClick={() => setLoginVisible(true)}>
+                  Login
+                </Typography>
+                <Typography className="cursor-pointer" onClick={() => setSignUpVisible(true)}>
+                  Sign up
+                </Typography>
+              </div>
             )}
           </Toolbar>
         </Container>
       </AppBar>
+      {signUpVisible && <SignUpDialog visible={signUpVisible} handleClose={() => setSignUpVisible(false)} />}
+      {loginVisible && <LoginDialog visible={loginVisible} handleClose={() => setLoginVisible(false)} login={login} />}
     </div>
   );
 };
