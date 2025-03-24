@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { useAuth } from "../auth/useAuth";
 import CommonPaginationResponse from "../infrastructure/CommonPaginationResponse";
 import CommonResponse from "../infrastructure/CommonResponse";
 import Endpoint from "../infrastructure/Endpoint";
@@ -19,20 +20,22 @@ interface CategoryServicesReturnTypes {
 }
 
 export default function CategoryServices(): CategoryServicesReturnTypes {
+  const { token } = useAuth();
+
   const getCategories = (params: PaginationProps) => {
-    return axios.get(Endpoint.CATEGORIES, axiosConfig(params));
+    return axios.get(Endpoint.CATEGORIES, axiosConfig(token, params));
   };
 
   const deleteCategory = (categoryId: string) => {
-    return axios.delete(`${Endpoint.CATEGORIES}/${categoryId}`);
+    return axios.delete(`${Endpoint.CATEGORIES}/${categoryId}`, axiosConfig(token));
   };
 
   const createCategory = (category: CreateCategoryType) => {
-    return axios.post(Endpoint.CATEGORIES, category);
+    return axios.post(Endpoint.CATEGORIES, category, axiosConfig(token));
   };
 
   const updateCategory = (categoryId: string, category: CreateCategoryType) => {
-    return axios.put(`${Endpoint.CATEGORIES}/${categoryId}`, category);
+    return axios.put(`${Endpoint.CATEGORIES}/${categoryId}`, category, axiosConfig(token));
   };
 
   return { getCategories, deleteCategory, createCategory, updateCategory };
