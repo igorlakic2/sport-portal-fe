@@ -1,4 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { showNotification } from "../../../../redux/slices/notificationSlice";
+import store from "../../../../redux/store";
 import CategoryServices from "../../../../services/CategoryServices";
 import { CreateCategoryType } from "../../../../types/category/CreateCategoryType";
 
@@ -10,7 +12,8 @@ export default function useCreateCategory() {
     mutationFn: (category: CreateCategoryType) => createCategory(category),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
+      store.dispatch(showNotification({ message: "Category successfully added", severity: "success" }));
     },
-    onError: (error) => console.log(error),
+    onError: (error) => store.dispatch(showNotification({ message: error.message, severity: "error" })),
   });
 }

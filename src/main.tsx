@@ -8,7 +8,7 @@ import App from "./App.tsx";
 import { AuthProvider } from "./auth/AuthProvider.tsx";
 import { theme } from "./customTheme";
 import "./index.css";
-import store from "./store.ts";
+import store from "./redux/store.ts";
 
 const queryClient = new QueryClient();
 
